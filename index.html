@@ -126,8 +126,10 @@ function getWeekDays(monday) {
   return Array.from({length:7},(_,i)=>{ const d=new Date(monday); d.setDate(d.getDate()+i); return d; });
 }
 function getThisMonday() {
-  const d=new Date(), day=d.getDay(), diff=day===0?-6:1-day;
-  d.setDate(d.getDate()+diff); d.setHours(0,0,0,0); return d;
+  // Semana base fixa: 30/03/2026
+  const d = new Date(2026, 2, 30); // mês 2 = março (0-indexed)
+  d.setHours(0,0,0,0);
+  return d;
 }
 let _id=0;
 function genId() { return `p_${Date.now()}_${_id++}`; }
@@ -268,7 +270,7 @@ function App() {
                 style={{width:32,height:32,display:"flex",alignItems:"center",justifyContent:"center",color:"#94a3b8",background:"none",border:"none",cursor:"pointer",fontSize:16}}>‹</button>
               <button onClick={()=>{setOffset(0);closeDetail();}}
                 style={{padding:"0 8px",height:32,color:offset===0?"#f59e0b":"#94a3b8",background:"none",border:"none",cursor:"pointer",fontSize:11,fontFamily:"DM Mono,monospace",minWidth:46,textAlign:"center"}}>
-                {offset===0?"Agora":offset>0?`+${offset*2}s`:`${offset*2}s`}
+                {offset===0?`S${offset*2+1}·${offset*2+2}`:`S${offset*2+1}·${offset*2+2}`}
               </button>
               <button onClick={()=>{setOffset(o=>o+1);closeDetail();}}
                 style={{width:32,height:32,display:"flex",alignItems:"center",justifyContent:"center",color:"#94a3b8",background:"none",border:"none",cursor:"pointer",fontSize:16}}>›</button>
@@ -315,13 +317,13 @@ function App() {
         <div style={{flex:1,minWidth:0,padding:isMobile?"12px 12px 80px":"16px 16px 40px"}}>
           {isMobile ? (
             <div style={{display:"flex",flexDirection:"column",gap:8}}>
-              <WeekHeaderMobile label="Semana 1" days={w1}/>
+              <WeekHeaderMobile label={`Semana ${offset*2+1}`} days={w1}/>
               {w1.map(d=>(
                 <DayCardMobile key={toISO(d)} day={d} posts={posts[toISO(d)]||[]} isToday={toISO(d)===today}
                   selected={selected} onSelectPost={openDetail}
                   onAddPost={()=>setAddModal(toISO(d))} onCycleStatus={cycleStatus}/>
               ))}
-              <WeekHeaderMobile label="Semana 2" days={w2}/>
+              <WeekHeaderMobile label={`Semana ${offset*2+2}`} days={w2}/>
               {w2.map(d=>(
                 <DayCardMobile key={toISO(d)} day={d} posts={posts[toISO(d)]||[]} isToday={toISO(d)===today}
                   selected={selected} onSelectPost={openDetail}
@@ -330,10 +332,10 @@ function App() {
             </div>
           ) : (
             <div style={{display:"flex",flexDirection:"column",gap:20}}>
-              <WeekGrid label="Semana 1" days={w1} posts={posts} today={today} selected={selected}
+              <WeekGrid label={`Semana ${offset*2+1}`} days={w1} posts={posts} today={today} selected={selected}
                 onSelectPost={openDetail} onAddPost={d=>setAddModal(d)} onCycleStatus={cycleStatus}/>
               <div style={{borderTop:"1px solid #1e293b",margin:"4px 0"}}/>
-              <WeekGrid label="Semana 2" days={w2} posts={posts} today={today} selected={selected}
+              <WeekGrid label={`Semana ${offset*2+2}`} days={w2} posts={posts} today={today} selected={selected}
                 onSelectPost={openDetail} onAddPost={d=>setAddModal(d)} onCycleStatus={cycleStatus}/>
             </div>
           )}
