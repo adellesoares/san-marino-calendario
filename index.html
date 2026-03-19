@@ -9,16 +9,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: { slate: { 950: '#020817' } },
-      fontFamily: { sans: ["DM Sans","system-ui","sans-serif"], mono: ["DM Mono","monospace"] }
-    }
-  }
-}
-</script>
 <style>
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body { margin: 0; background: #020817; font-family: 'DM Sans', system-ui, sans-serif; overscroll-behavior: none; }
@@ -69,7 +59,7 @@ const { useState, useEffect, useRef } = React;
 
 // ── SUPABASE CONFIG ───────────────────────────────────────────
 const SUPABASE_URL = "https://clftsvytkusorbxbfoua.supabase.co";
-const SUPABASE_KEY = "sb_publishable_S7r6LtWwnU63kPbpuKrBag_SjozwEbh";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNsZnRzdnl0a3Vzb3JieGJmb3VhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NzkwMzEsImV4cCI6MjA4OTQ1NTAzMX0.Z4P5LqBIB8KABBwiwq6K4fGE0bi8ng04eWV40geNSKQ";
 const TABLE = "calendario";
 
 async function dbGet(key) {
